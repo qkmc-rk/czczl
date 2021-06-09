@@ -1,35 +1,35 @@
 package cn.edu.sicau.czczl.util;
 
 
-
-import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.util.DigestUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * MD5通用类
- *
- * @author 浩令天下
- * @version 1.0.0_1
- * @since 2017.04.15
+ * @author mrruan
  */
 public class MD5Util {
 
+    /**
+     * salt
+     */
     private static String key = "whateverisOK";
-    // 手机正则
+    /**
+     *  手机号码的正则表达式
+     */
     private static String regex = "^[1](([3|5|8][\\d])|([4][4,5,6,7,8,9])|([6][2,5,6,7])|([7][^9])|([9][1,8,9]))[\\d]{8}$";
 
     /**
      * MD5方法
-     *
      * @param text 明文
      * @return 密文
      * @throws Exception
      */
     public static String md5(String text) {
         //加密后的字符串
-        String encodeStr = DigestUtils.md5Hex(text + key);
+        String encodeStr = DigestUtils.md5DigestAsHex((text + key).getBytes());
         System.out.println("MD5加密后的字符串为:encodeStr=" + encodeStr);
         return encodeStr;
     }
@@ -92,7 +92,7 @@ public class MD5Util {
     }
 
     public static String trueMd5(String text) {
-        String str = DigestUtils.md5Hex(text);
+        String str = DigestUtils.md5DigestAsHex(text.getBytes());
         return str;
     }
 

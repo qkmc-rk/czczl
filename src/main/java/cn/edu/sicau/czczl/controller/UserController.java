@@ -19,10 +19,15 @@ package cn.edu.sicau.czczl.controller;//                            _ooOoo_
 //        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //                      Buddha Bless, No Bug !
 
+import cn.edu.sicau.czczl.service.UserService;
+import cn.edu.sicau.czczl.service.redis.RedisService;
+import cn.edu.sicau.czczl.util.Constant;
 import cn.edu.sicau.czczl.vo.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * TODO
@@ -37,8 +42,16 @@ import org.springframework.web.bind.annotation.RestController;
  * 5. 返回用户玩游戏当前的关卡信息 step   /step/{userid}
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
+@Api(value = "用户模块相关的操作由userController来实现")
 public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RedisService redisService;
 
     /**
      * 登录接口
@@ -46,7 +59,22 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity login(String code){
-        return null;
+    @ApiOperation(value = "登录接口", notes = "[匿名]传入小程序的code,进行登录,登录要做成restful API，必须跟资源联系起来，登录对应操作的是token")
+    public ResponseEntity login(@ApiParam(value = "小程序code,必须传入") @RequestParam String code){
+        Integer loginResult = userService.login(code);
+        ResponseEntity responseEntity = new ResponseEntity();
+        if (loginResult.equals(Constant.LOGIN_NO_USER)){
+            responseEntity.error(Constant.LOGIN_NO_USER, "LOGIN_NO_USER, login failed, cannot save user into db", null);
+        } else if (loginResult.equals(Constant.LOGIN_CODE_ERROR)){
+            responseEntity.error(Constant.LOGIN_CODE_ERROR, "LOGIN_CODE_ERROR", null);
+        } else if (loginResult.equals(Constant.LOGIN_CODE_USED)){
+            responseEntity.error(Constant.LOGIN_CODE_USED, "LOGIN_CODE_USED", null);
+        } else if (loginResult.equals(Constant.LOGIN_SERVER_ERROR)){
+            responseEntity.error(Constant.LOGIN_SERVER_ERROR, "LOGIN_SERVER_ERROR", null);
+        } else {
+            String token = redisService.readDataFromRedis("token" + loginResult.intValue());
+            responseEntity.success(Constant.LOGIN_SUCCESS, "login success", token);
+        }
+        return responseEntity;
     }
 }

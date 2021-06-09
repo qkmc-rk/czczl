@@ -10,8 +10,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@Entity
 @Table(name = "material")
-public class MaterialEntity implements Serializable {
+public class Material implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -32,6 +33,6 @@ public class MaterialEntity implements Serializable {
   private Date modifyTime;
 
   @Column(name = "is_delete")
-  private Boolean isDelete;
+  private Boolean isDelete = false;
 
 }

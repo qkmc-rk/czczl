@@ -9,37 +9,38 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@Entity
 @Table(name = "user")
-public class UserEntity implements Serializable {
+public class User implements Serializable {
+
   private static final long serialVersionUID = 1L;
+
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
   private String university;
   private String college;
   private String major;
   private String grade;
-//  修改
-  @Column(nullable = false,name = "class")
   private String clazz;
   private String name;
   private String idcard;
   private String stuno;
 
   @Column(name = "openid")
-  private Long openid;
+  private String openid;
   @Column(name = "score")
-  private Long score;
+  private Integer score;
   @Column(name = "add_score")
-  private Long addScore;
+  private Integer addScore;
   @Column(name = "sub_score")
-  private Long subScore;
+  private Integer subScore;
   @Column(name = "step")
-  private Long step;
+  private Integer step;
   @Column(name = "shoe")
-  private Long shoe;
+  private Integer shoe;
   @Column(name = "raincoat")
-  private Long raincoat;
+  private Integer raincoat;
 
   @Column(name = "create_time")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

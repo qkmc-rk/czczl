@@ -33,4 +33,15 @@ public interface Constant {
 
     Integer LOGIN_BLACK_USER = -4;
 
+    Integer AOP_SERVER_ERROR = -99;
+    String AOP_SERVER_ERROR_MESSAGE = "AOP SERVER ERROR";
+
+    Integer PERMISSION_DENIED = -10;
+    Integer AUTH_ROLE_ERROR = -11;
+
+    //登录时微信返回的code
+    //已经被使用的code
+    Integer WX_USED_CODE = 40163;
+    Integer WX_ERROR_CODE = 40029;
+
 }

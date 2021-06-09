@@ -53,7 +53,7 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
                 .licenseUrl("= =！")
                 .termsOfServiceUrl("")
                 .version("1.0")
-                .contact(new Contact("mrruan","https://ruankun.xyz", "qkmc@outlook.com"))
+                .contact(new Contact("mrruan","http://image.ruankun.xyz/sb.jpg", "qkmc@outlook.com"))
                 .build();
     }
 

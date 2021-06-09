@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@Entity
 @Table(name = "exam_item")
-public class ExamItemEntity implements Serializable {
+public class ExamItem implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id

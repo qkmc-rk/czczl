@@ -5,3 +5,6 @@
 - 使用 jpa， spring context， spring web， redis， mysql8， swagger等.
 - 测试贡献代码pull
 - 第二次测试
+
+## 2021.6.9
+- 完成entity撰写
