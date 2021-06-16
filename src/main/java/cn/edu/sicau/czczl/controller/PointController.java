@@ -26,9 +26,9 @@ package cn.edu.sicau.czczl.controller;//                            _ooOoo_
  * @version 1.0
  * @date 2021-06-05 12:25
  * point 就是点,一个点是一个关卡,所有又可以说这是关卡相关的controller, 关卡信息, 材料信息, 试题信息等都由这个controller控制
- * 1. 返回所有关卡中的材料信息 /point/material
- * 2. 返回某个关卡中的材料信息 /point/{pointid}/material
- * 3. 返回某个材料相关的十道试题 /material/{materialid}/question
+ * 1. 返回所有关卡中的材料信息 /point/material get  匿名
+ * 2. 返回某个关卡中的材料信息 /point/{pointid}/material   get  匿名
+ * 3. 返回某个材料相关的十道试题 /material/{materialid}/question get 匿名
  * 4. 获取某个材料的支线材料, 若没有则返回空,有则返回 /material/{materialid}/branch
  * 5. 答题,将试题id和十道题的答案传到后台，后台处理，算正确率,生成相关记录存数据库等操作  /point/material/answer
  */
