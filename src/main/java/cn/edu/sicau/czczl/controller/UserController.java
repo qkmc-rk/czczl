@@ -19,10 +19,16 @@ package cn.edu.sicau.czczl.controller;//                            _ooOoo_
 //        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //                      Buddha Bless, No Bug !
 
+import cn.edu.sicau.czczl.annotation.Authentication;
+import cn.edu.sicau.czczl.annotation.constant.AuthAopConstant;
+import cn.edu.sicau.czczl.entity.User;
 import cn.edu.sicau.czczl.service.UserService;
 import cn.edu.sicau.czczl.service.redis.RedisService;
 import cn.edu.sicau.czczl.util.Constant;
+import cn.edu.sicau.czczl.util.FieldValidator;
+import cn.edu.sicau.czczl.vo.BindUserInfoVO;
 import cn.edu.sicau.czczl.vo.ResponseEntity;
+import cn.edu.sicau.czczl.vo.UserScoreVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,9 +41,9 @@ import org.springframework.web.bind.annotation.*;
  * @author qkmc
  * @version 1.0
  * @date 2021-06-05 12:22
- * 1. 登录接口 /login
- * 2. 绑定用户信息 /user/{userid}/bind
- * 3. 获取个人信息 /user/{userid}/info
+ * 1. 登录接口 /login post
+ * 2. 绑定用户信息 /user/{userid}/bind post
+ * 3. 获取个人信息 /user/{userid}/info get
  * 4. 返回个人信息中的积分,蓑衣,草鞋 等信息 /user/{userid}/score
  * 5. 返回用户玩游戏当前的关卡信息 step   /step/{userid}
  */
@@ -47,10 +53,8 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "用户模块相关的操作由userController来实现")
 public class UserController {
 
-    @Autowired
     UserService userService;
 
-    @Autowired
     RedisService redisService;
 
     /**
@@ -76,5 +80,60 @@ public class UserController {
             responseEntity.success(Constant.LOGIN_SUCCESS, "login success", token);
         }
         return responseEntity;
+    }
+
+    /**
+     *  拿到用户需要绑定的信息 然后绑定到数据库
+     *  1 . 判断是否绑定, 若已绑定,返回已经绑定过
+     *  2 . 判断是否存在空值, 若存在空值,则不给绑定.
+     * @param token
+     * @param bindUserInfoVO
+     * @return
+     */
+    @PostMapping("/bind")
+    @Authentication(role = AuthAopConstant.USER)
+    @ApiOperation(value = "登录接口", notes = "[匿名]传入小程序的code,进行登录,登录要做成restful API，必须跟资源联系起来，登录对应操作的是token")
+    public ResponseEntity bindUserInfo(@ApiParam("每个参数必填") @RequestBody BindUserInfoVO bindUserInfoVO, @RequestHeader String token){
+        return userService.bindUserInfo(token, bindUserInfoVO);
+    }
+
+    /**
+     * 获取用户的基本信息
+     * @param token
+     * @return
+     */
+    @GetMapping("/info")
+    @Authentication(role = AuthAopConstant.USER)
+    public ResponseEntity getUserInfo(@RequestHeader String token){
+        return userService.getUserInfo(token);
+    }
+    /**
+     * /user/{userid}/score
+     **/
+    /**
+     * 获取用户的积分, 蓑衣, 草鞋等参数的值
+     * @param token
+     * @return
+     */
+    @GetMapping("/score")
+    @Authentication(role = AuthAopConstant.USER)
+    public ResponseEntity getScoreEtc(@RequestHeader String token){
+        ResponseEntity responseEntity = userService.getUserScore(token);
+        return responseEntity;
+    }
+
+
+    //--------------------------------------------------------------
+    //--------------------- 其它无关紧要的方法些 -----------------------
+    //--------------------------------------------------------------
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setRedisService(RedisService redisService) {
+        this.redisService = redisService;
     }
 }

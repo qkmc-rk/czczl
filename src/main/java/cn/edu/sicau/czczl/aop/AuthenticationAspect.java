@@ -147,9 +147,9 @@ public class AuthenticationAspect {
             //匿名的或者说用户过期的，没有找到session
             return AuthAopConstant.ANON;
         } else {
-            Integer id;
+            Long id;
             try {
-                id = Integer.parseInt(userId);
+                id = Long.parseLong(userId);
             } catch (Exception e) {
                 e.printStackTrace();
                 //都抛出了异常了，这个userId是假的，直接匿名者

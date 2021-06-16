@@ -1,6 +1,7 @@
 package cn.edu.sicau.czczl.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +29,7 @@ public class User implements Serializable {
   private String stuno;
 
   @Column(name = "openid")
+  @JsonIgnore
   private String openid;
   @Column(name = "score")
   private Integer score;
@@ -53,9 +55,9 @@ public class User implements Serializable {
   private Date modifyTime;
 
   @Column(name = "is_delete")
+  @JsonIgnore
   private Boolean isDelete;
   @Column(name = "is_bind")
   private Boolean isBind;
-
 
 }

@@ -24,15 +24,17 @@ import cn.edu.sicau.czczl.repository.UserRepository;
 import cn.edu.sicau.czczl.service.UserService;
 import cn.edu.sicau.czczl.service.redis.RedisService;
 import cn.edu.sicau.czczl.util.Constant;
+import cn.edu.sicau.czczl.util.FieldValidator;
 import cn.edu.sicau.czczl.util.MD5Util;
+import cn.edu.sicau.czczl.vo.BindUserInfoVO;
+import cn.edu.sicau.czczl.vo.ResponseEntity;
+import cn.edu.sicau.czczl.vo.UserScoreVO;
 import cn.edu.sicau.czczl.vo.WxServerResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
     private RedisService redisService;
 
     @Override
-    public User findUserById(Integer userId) {
+    public User findUserById(Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()){
             return optionalUser.get();
@@ -124,6 +126,60 @@ public class UserServiceImpl implements UserService {
         return Constant.LOGIN_SERVER_ERROR;
     }
 
+    @Override
+    public cn.edu.sicau.czczl.vo.ResponseEntity bindUserInfo(String token, BindUserInfoVO bindUserInfoVO) {
+
+        ResponseEntity responseEntity = new ResponseEntity();
+        String userid = redisService.readDataFromRedis(token);
+        User user = userRepository.findById(Long.parseLong(userid)).orElse(null);
+        // 判断用户合法性
+        if(null == user || user.getIsBind()){
+            responseEntity.error(Constant.LOGIN_NO_USER, "非法绑定, 无法绑定用户信息,请判断用户是否存在,是否已绑定", null);
+            return  responseEntity;
+        }
+        // 判断绑定信息是否完善
+        if (new FieldValidator<BindUserInfoVO>()
+                .hasNullOrEmptyField(bindUserInfoVO)){
+            responseEntity.error(Constant.FORM_NULL_EMPTY_VALUE, "表单字段不规范,有空值: " + bindUserInfoVO.toString(), null);
+            return responseEntity;
+        }
+        // 进行绑定
+        // 应该不需要异常处理吧 ??
+        user = new FieldValidator<BindUserInfoVO>().updateAWithB(user, bindUserInfoVO);
+        user.setIsBind(true);
+        user = userRepository.saveAndFlush(user);
+        responseEntity.success(Constant.SUCCESS_CODE, "绑定成功", user);
+        return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity getUserInfo(String token) {
+
+        Long userid = Long.parseLong(redisService.readDataFromRedis(token));
+        ResponseEntity responseEntity = new ResponseEntity();
+        String serverUserId = redisService.readDataFromRedis(token);
+        if (!(("" + userid).equals(serverUserId))){
+            responseEntity.error(Constant.AUTH_ROLE_ERROR, "用户信息不合法", null);
+        }
+        User user = userRepository.findById(userid).orElse(null);
+        if (null == user){
+            responseEntity.error(Constant.FAILURE_CODE, "没有找到用户信息", null);
+        }
+        responseEntity.success(Constant.SUCCESS_CODE, "获取成功", user);
+        return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity getUserScore(String token) {
+
+        ResponseEntity responseEntity = getUserInfo(token);
+        UserScoreVO userScoreVO = new FieldValidator<User>().updateAWithB(new UserScoreVO(), (User) responseEntity.getData());
+        responseEntity.setData(userScoreVO);
+
+        return responseEntity;
+    }
+
+
     /**
      * 封装了请求微信服务端的代码，传入code，请求后，将结果封装成为一个WxServerResult对象返回
      *
@@ -161,7 +217,7 @@ public class UserServiceImpl implements UserService {
      * @return 服务器响应数据
      */
     private String getBody(RestTemplate restTemplate, String uri) {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
+        org.springframework.http.ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
         if (responseEntity.getStatusCodeValue() == 200) {
             return responseEntity.getBody();
         }
