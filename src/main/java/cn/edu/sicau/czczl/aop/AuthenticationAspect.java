@@ -26,7 +26,13 @@ import javax.servlet.http.HttpServletRequest;
  *
  * 是否需要在程序主类中增加@EnableAspectJAutoProxy 注解
  * 答案是否。只要引入了AOP依赖后，默认已经增加了@EnableAspectJAutoProxy
- *
+ *      @interface EnableAspectJAutoProxy   -> proxyTargetClass  exposeProxy
+ *          @Import AspectJAutoProxyRegistrar（根据实现的接口,说明这是一个导入Bean定义的注册器）  implements ImportBeanDefinitionRegistrar
+ *              AspectJAutoProxyRegistrar会往spring的容器中加入一个AnnotationAwareAspectJAutoProxyCreator
+ *                  往spring容器中加入一个AutoProxyCreator
+ *                      该creator执行registerAspectJAnnotationAutoProxyCreatorIfNecessary
+ *                          registerBeanDefinition
+ *                      ....后面看不懂了, 最后肯定会注册一个BeanPostProcessor用于处理Bean
  * made by Jason. Completed by mrruan
  * @author qkmc
  */
