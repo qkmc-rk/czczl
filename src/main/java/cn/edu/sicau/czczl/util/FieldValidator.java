@@ -1,9 +1,11 @@
 package cn.edu.sicau.czczl.util;
 
 
-import com.sun.tools.javac.util.Assert;
+
+//import com.sun.tools.javac.util.Assert;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
+
 
 import java.lang.reflect.Field;
 
@@ -47,8 +49,8 @@ public class FieldValidator<T> {
     @SneakyThrows
     public <R> R updateAWithB(R a, T b){
 
-        Assert.checkNonNull(a, "a cannot be null");
-        Assert.checkNonNull(b, "b cannot be null");
+//        Assert.checkNonNull(a, "a cannot be null");
+//        Assert.checkNonNull(b, "b cannot be null");
 
         Class aType = a.getClass();
         Class bType = b.getClass();
