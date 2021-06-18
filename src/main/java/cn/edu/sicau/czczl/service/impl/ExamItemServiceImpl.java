@@ -19,8 +19,13 @@ package cn.edu.sicau.czczl.service.impl;//                            _ooOoo_
 //        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //                      Buddha Bless, No Bug !
 
+import cn.edu.sicau.czczl.entity.ExamItem;
+import cn.edu.sicau.czczl.repository.ExamItemRepository;
 import cn.edu.sicau.czczl.service.ExamItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * TODO
@@ -32,4 +37,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExamItemServiceImpl implements ExamItemService {
 
+    @Autowired
+    private ExamItemRepository examItemRepository;
+    @Override
+    public List<ExamItem> findQuestionByMaterialId(Long materialid) {
+        List<ExamItem> examItemList=examItemRepository.findExamItemByMaterialId(materialid);
+        return examItemList;
+    }
 }
