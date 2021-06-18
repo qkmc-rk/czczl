@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 当微信调用登录接口时，从微信服务器获取登录信息，将信息封装为一个对象。
+ * @author qkmc
  */
 public class WxServerResult {
 

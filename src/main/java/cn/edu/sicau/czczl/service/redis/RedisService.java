@@ -47,6 +47,7 @@ public interface RedisService {
      * @param userId 用户ID
      * @param token 用户的token
      * @param period 刷新时常 单位为分钟
+     * @return 刷新缓存是否成功
      */
     Boolean refreshToken(Integer userId, String token, Integer period);
 

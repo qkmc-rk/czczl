@@ -4,10 +4,11 @@ import javax.persistence.Column;
 
 /**
  * 返回用户的积分等信息时使用
+ * @author qkmc
  */
 public class UserScoreVO {
 
-    private long id;
+    private Long id;
     private Integer shoe;
     private Integer raincoat;
     private Integer score;
@@ -60,5 +61,17 @@ public class UserScoreVO {
 
     public void setSubScore(Integer subScore) {
         this.subScore = subScore;
+    }
+
+    @Override
+    public String toString() {
+        return "UserScoreVO{" +
+                "id=" + id +
+                ", shoe=" + shoe +
+                ", raincoat=" + raincoat +
+                ", score=" + score +
+                ", addScore=" + addScore +
+                ", subScore=" + subScore +
+                '}';
     }
 }

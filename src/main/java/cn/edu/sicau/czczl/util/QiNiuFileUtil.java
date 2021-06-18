@@ -21,6 +21,7 @@ import java.util.Properties;
 
 /**
  * 对象存储工具
+ * @author qkmc
  */
 public class QiNiuFileUtil {
 

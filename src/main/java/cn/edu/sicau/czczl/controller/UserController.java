@@ -21,14 +21,11 @@ package cn.edu.sicau.czczl.controller;//                            _ooOoo_
 
 import cn.edu.sicau.czczl.annotation.Authentication;
 import cn.edu.sicau.czczl.annotation.constant.AuthAopConstant;
-import cn.edu.sicau.czczl.entity.User;
 import cn.edu.sicau.czczl.service.UserService;
 import cn.edu.sicau.czczl.service.redis.RedisService;
 import cn.edu.sicau.czczl.util.Constant;
-import cn.edu.sicau.czczl.util.FieldValidator;
 import cn.edu.sicau.czczl.vo.BindUserInfoVO;
 import cn.edu.sicau.czczl.vo.ResponseEntity;
-import cn.edu.sicau.czczl.vo.UserScoreVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,10 +39,10 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  * @date 2021-06-05 12:22
  * 1. 登录接口 /login post
- * 2. 绑定用户信息 /user/{userid}/bind post
- * 3. 获取个人信息 /user/{userid}/info get
- * 4. 返回个人信息中的积分,蓑衣,草鞋 等信息 /user/{userid}/score
- * 5. 返回用户玩游戏当前的关卡信息 step   /step/{userid}
+ * 2. 绑定用户信息 /user/bind post
+ * 3. 获取个人信息 /user/info get
+ * 4. 返回个人信息中的积分,蓑衣,草鞋 等信息 /user/score
+ * 5. 返回用户玩游戏当前的关卡信息 step   /user/step
  */
 @RestController
 @CrossOrigin

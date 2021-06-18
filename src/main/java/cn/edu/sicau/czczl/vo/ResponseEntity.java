@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+/**
+ * @author qkmc
+ */
 public class ResponseEntity<T> {
 
     @JsonProperty("status")

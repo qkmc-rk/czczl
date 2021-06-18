@@ -15,6 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 /**
  * swagger的注释
  *
+ * @author qkmc
  * @Api：修饰整个类，描述Controller的作用
  *
  * @ApiOperation：描述一个类的一个方法，或者说一个接口

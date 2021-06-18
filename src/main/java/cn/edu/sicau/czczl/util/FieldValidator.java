@@ -3,6 +3,7 @@ package cn.edu.sicau.czczl.util;
 
 import com.sun.tools.javac.util.Assert;
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
@@ -12,6 +13,7 @@ import java.lang.reflect.Field;
  * 回相应的值
  * @author qkmc
  */
+@Component
 public class FieldValidator<T> {
 
     /**

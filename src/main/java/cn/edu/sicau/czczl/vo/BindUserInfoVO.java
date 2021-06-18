@@ -1,5 +1,8 @@
 package cn.edu.sicau.czczl.vo;
 
+/**
+ * @author qkmc
+ */
 public class BindUserInfoVO {
 
     private String university;

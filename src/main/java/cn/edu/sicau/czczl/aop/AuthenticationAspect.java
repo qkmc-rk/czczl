@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 使用aop完成API请求时的认证和权限
+ *
+ * 是否需要在程序主类中增加@EnableAspectJAutoProxy 注解
+ * 答案是否。只要引入了AOP依赖后，默认已经增加了@EnableAspectJAutoProxy
+ *
  * made by Jason. Completed by mrruan
  * @author qkmc
  */
@@ -55,7 +59,7 @@ public class AuthenticationAspect {
      * //* @param joinPoint 方法执行前的参数
      * //* @param result 方法返回值 后续观察，是否保存
      */
-    @AfterReturning(value = "@annotation(cn.edu.sicau.czczl.annotation.Authentication)")
+    @AfterReturning(value = "pointcut()")
     public void after() {
         logger.info("refreshing token");
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
