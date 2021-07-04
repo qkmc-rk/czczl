@@ -171,12 +171,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity getUserScore(String token) {
-
         ResponseEntity responseEntity = getUserInfo(token);
         UserScoreVO userScoreVO = new FieldValidator<User>().updateAWithB(new UserScoreVO(), (User) responseEntity.getData());
         responseEntity.setData(userScoreVO);
 
         return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity getUserStep(String token) {
+        ResponseEntity responseEntity = new ResponseEntity();
+        Long userid = Long.parseLong(redisService.readDataFromRedis(token));
+        User user = userRepository.findById(userid).orElse(null);
+        assert user != null;
+        responseEntity.setData(user.getStep());
+        return responseEntity;
+    }
+
+    @Override
+    public User saveUser(User user) {
+        return userRepository.saveAndFlush(user);
     }
 
 

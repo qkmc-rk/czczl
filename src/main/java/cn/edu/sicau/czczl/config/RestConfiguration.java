@@ -58,7 +58,7 @@ public class RestConfiguration {
 
 
     @Bean("responseEntity")
-    @Scope("request")
+//    @Scope("request")
     public ResponseEntity responseEntity(){
         //注入responseEntity Bean 似乎没什么用
         return new ResponseEntity();

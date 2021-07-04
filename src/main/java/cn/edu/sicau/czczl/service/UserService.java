@@ -46,4 +46,18 @@ public interface UserService {
      * @return 返回用户的基本信息
      */
     ResponseEntity getUserScore(String token);
+
+    /**
+     * 根据user的id或者user的关卡信息
+     * @param token token
+     * @return 关卡信息
+     */
+    ResponseEntity getUserStep(String token);
+
+    /**
+     * 保存一个用户
+     * @param user
+     * @return
+     */
+    User saveUser(User user);
 }

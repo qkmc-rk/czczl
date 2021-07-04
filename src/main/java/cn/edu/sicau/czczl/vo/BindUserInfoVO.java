@@ -1,17 +1,28 @@
 package cn.edu.sicau.czczl.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author qkmc
  */
+@ApiModel
 public class BindUserInfoVO {
-
+    @ApiModelProperty("学校")
     private String university;
+    @ApiModelProperty("学院")
     private String college;
+    @ApiModelProperty("专业")
     private String major;
+    @ApiModelProperty("年级")
     private String grade;
+    @ApiModelProperty("班级")
     private String clazz;
+    @ApiModelProperty("姓名")
     private String name;
+    @ApiModelProperty("身份证号码")
     private String idcard;
+    @ApiModelProperty("学号")
     private String stuno;
 
     public String getUniversity() {

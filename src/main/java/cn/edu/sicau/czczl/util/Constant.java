@@ -63,4 +63,46 @@ public interface Constant {
 
     Integer FORM_NULL_EMPTY_VALUE = -100;
 
+    /**
+     * 答题的时间界限和分数
+     */
+    Integer ANSWER_SCORE = 1;
+    /**
+     * 根据timeSocre计算时间分数
+     */
+    Integer TIME1_SCORE = 2;
+    Integer TIME2_SCORE = 1;
+    Integer TIME3_SCORE = 0;
+
+    /**
+     * 时间分界线
+     */
+    Integer TIME_START = 0;
+    Integer TIME_DIVIDE1 = 2;
+    Integer TIME_DIVIDE2 = 4;
+    Integer TIME_END = 5;
+    /**
+     * 最低正确率
+     */
+    Integer PASS_RATE = 6;
+
+    /**
+     * 答错一道题扣这么多分数
+     */
+    Integer WRONG_SCORE = 1;
+    /**
+     * 答对一道题加这么多分数
+     */
+    Integer CORRECT_SCORE = 1;
+
+    /**
+     * 题型
+     */
+    Integer STEM_TYPE_CHOICE = 1;
+    Integer STEM_TYPE_JUDGE = 2;
+    Integer STEM_TYPE_FILL = 3;
+
+
+
+
 }

@@ -101,7 +101,8 @@ public class UserController {
      */
     @GetMapping("/info")
     @Authentication(role = AuthAopConstant.USER)
-    public ResponseEntity getUserInfo(@RequestHeader String token){
+    @ApiOperation("获取用户的基本信息, 脱敏，没有openid等信息")
+    public ResponseEntity getUserInfo(@ApiParam("token") @RequestHeader String token){
         return userService.getUserInfo(token);
     }
     /**
@@ -114,9 +115,22 @@ public class UserController {
      */
     @GetMapping("/score")
     @Authentication(role = AuthAopConstant.USER)
+    @ApiOperation("获取用户的积分, 蓑衣, 草鞋等参数的值")
     public ResponseEntity getScoreEtc(@RequestHeader String token){
         ResponseEntity responseEntity = userService.getUserScore(token);
         return responseEntity;
+    }
+
+    /**
+     * 获取用户当前的关卡信息
+     * @param token
+     * @return
+     */
+    @GetMapping("/step")
+    @Authentication(role = AuthAopConstant.USER)
+    @ApiOperation("获取用户当前的关卡信息")
+    public ResponseEntity getStep(@RequestHeader String token){
+        return userService.getUserStep(token);
     }
 
 
