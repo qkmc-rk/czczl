@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2021-06-09 19:41:07
+Date: 2021-07-04 18:53:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,7 +23,7 @@ CREATE TABLE `exam_item` (
   `id` bigint(20) unsigned NOT NULL,
   `stem` varchar(255) DEFAULT NULL COMMENT '题干',
   `material_id` bigint(20) DEFAULT NULL COMMENT '对应材料id',
-  `stem_type` tinyint(1) DEFAULT NULL COMMENT '试题类型',
+  `stem_type` tinyint(1) DEFAULT NULL COMMENT '试题类型(选择判断填空123)',
   `choice_a` varchar(8) DEFAULT NULL,
   `choice_b` varchar(8) DEFAULT NULL,
   `choice_c` varchar(8) DEFAULT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `exam_item` (
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `is_delete` tinyint(1) unsigned zerofill NOT NULL COMMENT '逻辑删除 1为删除',
-  `is_prize_raincoat` tinyint(1) DEFAULT NULL COMMENT '草鞋还是蓑衣',
+  `is_prize_raincoat` tinyint(1) DEFAULT NULL COMMENT '草鞋1还是蓑衣2',
   `choicea` varchar(255) DEFAULT NULL,
   `choiceb` varchar(255) DEFAULT NULL,
   `choicec` varchar(255) DEFAULT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE `journey_point` (
   `name` varchar(32) DEFAULT NULL COMMENT '长征点的名字',
   `is_main` tinyint(3) unsigned DEFAULT NULL COMMENT '是否为主线 1是主线',
   `is_open` tinyint(3) unsigned DEFAULT NULL COMMENT '是否开放 1为开放',
-  `parent_id` bigint(20) DEFAULT NULL COMMENT '如果是主线，为0；如果是直线，为从属主线的id',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '如果是主线，为0；如果是支线，为从属主线的id',
   `id_delete` tinyint(1) unsigned zerofill DEFAULT NULL,
   `is_hidentask` tinyint(1) DEFAULT NULL COMMENT '是否有隐藏任务',
   `create_time` datetime DEFAULT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE `question_record` (
   `id` bigint(20) NOT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   `point_id` bigint(20) DEFAULT NULL COMMENT '长征点',
-  `question_id` bigint(20) DEFAULT NULL,
+  `question_id` bigint(20) DEFAULT NULL COMMENT '没用了，10道题目总共10个答案，怎么可能只有一个questionId呢',
   `is_answer` tinyint(1) DEFAULT NULL COMMENT '1是答题过',
   `q1` tinyint(1) DEFAULT NULL COMMENT '1是正确的，0是错误的',
   `q2` tinyint(1) DEFAULT NULL COMMENT '1是正确的，0是错误的',
